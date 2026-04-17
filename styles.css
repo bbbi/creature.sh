@@ -1,0 +1,241 @@
+/* SUPRACILIARY — Minimal Noctua with Animation */
+
+:root {
+    --bg: #f5f1e8;
+    --text: #4a443c;
+    --text-light: #8b8272;
+    --text-muted: #b8afa2;
+    --accent: #a98b6a;
+    --accent-dark: #8b6f52;
+    --border: #d9d2c4;
+    --font-sans: 'Inter', -apple-system, sans-serif;
+    --font-mono: 'Fira Code', monospace;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    height: 100%;
+}
+
+body {
+    font-family: var(--font-sans);
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    overflow: hidden;
+}
+
+/* Canvas Background */
+#bgCanvas {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    pointer-events: none;
+}
+
+/* Loader */
+.loader {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    background: var(--bg);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: opacity 0.5s, visibility 0.5s;
+}
+
+.loader.hidden {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.loader-content {
+    text-align: center;
+}
+
+.loader-text {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    margin-bottom: 16px;
+}
+
+.loader-bar {
+    width: 140px;
+    height: 2px;
+    background: var(--border);
+    border-radius: 1px;
+    overflow: hidden;
+}
+
+.loader-progress {
+    height: 100%;
+    background: var(--accent);
+    width: 0%;
+    animation: load 1.2s ease-out forwards;
+}
+
+@keyframes load {
+    to { width: 100%; }
+}
+
+/* Layout */
+.container {
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 0 32px;
+    min-height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/* Content */
+.content {
+    text-align: center;
+    padding: 80px 0 60px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.name {
+    font-size: clamp(40px, 8vw, 64px);
+    font-weight: 600;
+    letter-spacing: -0.02em;
+    line-height: 1.1;
+    margin-bottom: 12px;
+    color: var(--text);
+}
+
+.title {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.2em;
+    margin-bottom: 40px;
+}
+
+.bio {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--text-light);
+    max-width: 420px;
+    margin: 0 auto 48px;
+}
+
+/* Links */
+.links {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+    max-width: 480px;
+    margin: 0 auto;
+}
+
+@media (max-width: 520px) {
+    .links {
+        grid-template-columns: 1fr;
+        max-width: 320px;
+    }
+}
+
+.link {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 16px 24px;
+    background: rgba(255, 255, 255, 0.5);
+    border: 1px solid var(--border);
+    border-radius: 6px;
+    text-decoration: none;
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 500;
+    transition: all 0.25s;
+    backdrop-filter: blur(4px);
+}
+
+.link:hover {
+    border-color: var(--accent);
+    background: rgba(255, 255, 255, 0.8);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 20px rgba(169, 139, 106, 0.15);
+}
+
+.link i {
+    width: 18px;
+    color: var(--text-muted);
+    font-size: 16px;
+    transition: color 0.25s;
+}
+
+.link:hover i {
+    color: var(--accent);
+}
+
+/* Footer */
+.footer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    padding: 40px 0;
+}
+
+.footer p {
+    font-size: 11px;
+    color: var(--text-muted);
+}
+
+.dot {
+    width: 4px;
+    height: 4px;
+    background: var(--border);
+    border-radius: 50%;
+}
+
+/* Fade Animation */
+.fade-in {
+    opacity: 0;
+    animation: fadeIn 0.6s ease-out forwards;
+}
+
+@keyframes fadeIn {
+    to { opacity: 1; }
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+        animation-duration: 0.01ms !important;
+        transition-duration: 0.01ms !important;
+    }
+}
+
+/* Honeypot trap - visually hidden but in markup */
+.trap-link {
+    position: absolute;
+    left: -9999px;
+    top: -9999px;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+}
